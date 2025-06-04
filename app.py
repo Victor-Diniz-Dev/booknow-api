@@ -21,6 +21,14 @@ def listar_livros():
 if __name__ == "__main__":
     app.run(debug=True)
 
+
+@app.route("/generos")
+def listar_generos():
+    with engine.connect() as connection:
+        result = connection.execute(text("SELECT * FROM generos"))
+        generos = [dict(row._mapping) for row in result]
+        return jsonify(generos)
+
 @app.route("/ping")
 def ping():
     return jsonify({"status": "ok"})
