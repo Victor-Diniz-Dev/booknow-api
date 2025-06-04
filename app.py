@@ -3,6 +3,7 @@ from sqlalchemy import create_engine, text
 from flask import request
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app = Flask(__name__)
 
 DATABASE_URL = "postgresql://booknow_db_user:qGqC8626TL2nWm4myDWrQOzOE2ioJxnh@dpg-d0vq8f3ipnbc7386864g-a.oregon-postgres.render.com/booknow_db"
@@ -70,9 +71,9 @@ def cadastrar_usuario():
     if not nome or not email or not senha:
         return jsonify({"erro": "Campos obrigatórios: nome, email e senha"}), 400
 
-    senha_hash = generate_password_hash(senha)
-
     try:
+        senha_hash = generate_password_hash(senha)
+
         with engine.connect() as connection:
             connection.execute(
                 text("""
@@ -81,10 +82,12 @@ def cadastrar_usuario():
                 """),
                 {"nome": nome, "email": email, "senha": senha_hash}
             )
+
         return jsonify({"mensagem": "Usuário cadastrado com sucesso!"}), 201
 
     except Exception as e:
         return jsonify({"erro": "Erro ao cadastrar usuário", "detalhe": str(e)}), 500
+    
     
 #verifica se email+senha bate com o banco
 @app.route("/login", methods=["POST"])
