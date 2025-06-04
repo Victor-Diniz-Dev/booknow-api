@@ -88,7 +88,6 @@ def cadastrar_usuario():
     except Exception as e:
         return jsonify({"erro": "Erro ao cadastrar usuário", "detalhe": str(e)}), 500
     
-    
 #verifica se email+senha bate com o banco
 @app.route("/login", methods=["POST"])
 def login():
