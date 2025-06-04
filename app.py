@@ -22,13 +22,43 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
+#endpoint generos /generos
 @app.route("/generos")
 def listar_generos():
     with engine.connect() as connection:
         result = connection.execute(text("SELECT * FROM generos"))
         generos = [dict(row._mapping) for row in result]
         return jsonify(generos)
+    
+#endpoint livro pelo id /livros/<id>
+@app.route("/livros/<int:livro_id>")
+def detalhes_livro(livro_id):
+    with engine.connect() as connection:
+        result = connection.execute(
+            text("SELECT * FROM livros WHERE id = :id"),
+            {"id": livro_id}
+        )
+        livro = result.fetchone()
+        if livro:
+            return jsonify(dict(livro._mapping))
+        else:
+            return jsonify({"erro": "Livro não encontrado"}), 404
+        
 
+#retorna todos de um genero espec.  /generos/<id>/livros 
+@app.route("/generos/<int:genero_id>/livros")
+def livros_por_genero(genero_id):
+    with engine.connect() as connection:
+        result = connection.execute(
+            text("SELECT * FROM livros WHERE genero_id = :id"),
+            {"id": genero_id}
+        )
+        livros = [dict(row._mapping) for row in result]
+        return jsonify(livros)
+
+
+
+#uptime robot - serviço que nao deixa a api dormir
 @app.route("/ping")
 def ping():
     return jsonify({"status": "ok"})
