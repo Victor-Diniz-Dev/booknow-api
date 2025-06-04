@@ -15,7 +15,7 @@ def home():
 def listar_livros():
     with engine.connect() as connection:
         result = connection.execute(text("SELECT * FROM livros"))
-        livros = [dict(row) for row in result]
+        livros = [dict(row._mapping) for row in result]
         return jsonify(livros)
 
 if __name__ == "__main__":
