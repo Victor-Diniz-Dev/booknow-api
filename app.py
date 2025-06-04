@@ -3,8 +3,8 @@ from sqlalchemy import create_engine, text
 
 app = Flask(__name__)
 
-# 🔐 Sua string de conexão aqui (copie do Render)
-DATABASE_URL = "postgresql://booknow_db_user:senha_aqui@dpg-nomehost.render.com:5432/booknow_db"
+
+DATABASE_URL = "postgresql://booknow_db_user:qGqC8626TL2nWm4myDWrQOzOE2ioJxnh@dpg-d0vq8f3ipnbc7386864g-a.oregon-postgres.render.com/booknow_db"
 engine = create_engine(DATABASE_URL)
 
 @app.route("/")
