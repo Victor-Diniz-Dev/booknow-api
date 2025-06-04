@@ -78,9 +78,9 @@ def cadastrar_usuario():
             connection.execute(
                 text("""
                     INSERT INTO usuarios (nome, email, senha_hash)
-                    VALUES (:nome, :email, :senha)
+                    VALUES (:nome, :email, :senha_hash)
                 """),
-                {"nome": nome, "email": email, "senha": senha_hash}
+                {"nome": nome, "email": email, "senha_hash": senha_hash}
             )
 
         return jsonify({"mensagem": "Usuário cadastrado com sucesso!"}), 201
