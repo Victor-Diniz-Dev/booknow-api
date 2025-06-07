@@ -63,6 +63,7 @@ def livros_por_genero(genero_id):
 @app.route("/usuarios", methods=["POST"])
 def cadastrar_usuario():
     data = request.get_json()
+    print(data)
 
     nome = data.get("nome")
     email = data.get("email")
