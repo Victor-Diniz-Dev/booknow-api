@@ -75,14 +75,15 @@ def cadastrar_usuario():
     try:
         senha_hash = generate_password_hash(senha)
 
-        with engine.connect() as connection:
+        with engine.begin() as connection:
             connection.execute(
                 text("""
                     INSERT INTO usuarios (nome, email, senha_hash)
-                    VALUES (:nome, :email, :senha_hash)
+                    VALUES (:nome, :email, :senha)
                 """),
-                {"nome": nome, "email": email, "senha_hash": senha_hash}
+                {"nome": nome, "email": email, "senha": senha_hash}
             )
+
 
         return jsonify({"mensagem": "Usuário cadastrado com sucesso!"}), 201
 
